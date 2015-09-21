@@ -39,10 +39,11 @@ class Oara_Factory {
 
 		$affiliate = null;
 		$networkName = $credentials['networkName'];
-		try {
-			$networkClassName = 'Oara_Network_'.$credentials["type"].'_'.$networkName;
+		
+		$networkClassName = 'Oara_Network_'.$credentials["type"].'_'.$networkName;
+		if (class_exists($networkClassName)) {
 			$affiliate = new $networkClassName($credentials);
-		} catch (Exception $e) {
+		} else {
 			throw new Exception('No Network Available '.$networkName);
 		}
 		return $affiliate;
